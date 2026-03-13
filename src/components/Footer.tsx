@@ -40,7 +40,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative bg-eagle-black border-t border-eagle-gold/10">
+    <footer className="relative font-black bg-eagle-black border-t border-eagle-gold/10">
       {/* Newsletter Bar */}
       <div className="bg-gradient-to-r from-eagle-gold/10 via-eagle-yellow/5 to-eagle-gold/10 border-b border-eagle-gold/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -74,7 +74,7 @@ export default function Footer() {
       </div>
 
       {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
@@ -171,7 +171,7 @@ export default function Footer() {
               </li>
             </ul>
             <div className="mt-6 p-4 rounded-xl bg-eagle-gold/5 border border-eagle-gold/10">
-              <p className="text-eagle-gold/70 text-xs font-medium">🕐 Horaires</p>
+              <p className="text-eagle-gold/70 text-xs font-medium">Horaires</p>
               <p className="text-white/50 text-xs mt-1">{COMPANY.hours}</p>
             </div>
           </div>

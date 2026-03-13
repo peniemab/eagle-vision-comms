@@ -13,7 +13,7 @@ export default function BlogPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 pb-16 overflow-hidden">
+      <section className="relative font-black pt-32 pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-eagle-gold/5 via-transparent to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <ScrollReveal>
@@ -51,7 +51,7 @@ export default function BlogPage() {
                   />
                   <div className="absolute top-6 left-6">
                     <span className="bg-eagle-gold text-eagle-black text-xs font-semibold px-3 py-1.5 rounded-full">
-                      ⭐ Article vedette
+                      Article vedette
                     </span>
                   </div>
                 </div>

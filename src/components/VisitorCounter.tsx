@@ -36,7 +36,7 @@ export default function VisitorCounter() {
   ];
 
   return (
-    <section className="py-16 relative overflow-hidden">
+    <section className="py-16 font-black relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-eagle-gold/5 via-transparent to-transparent" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center mb-10">

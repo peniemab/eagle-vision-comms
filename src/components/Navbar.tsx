@@ -28,13 +28,12 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
             ? "bg-eagle-black/90 backdrop-blur-xl shadow-lg shadow-eagle-gold/5 py-2"
             : "bg-transparent py-4"
-        }`}
+          }`}
       >
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        <nav className="max-w-7xl font-black mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative w-10 h-10 flex items-center justify-center">
@@ -57,11 +56,10 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
-                  pathname === link.href
+                className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${pathname === link.href
                     ? "text-eagle-gold"
                     : "text-white/70 hover:text-white hover:bg-white/5"
-                }`}
+                  }`}
               >
                 {link.label}
                 {pathname === link.href && (
@@ -122,11 +120,10 @@ export default function Navbar() {
                   >
                     <Link
                       href={link.href}
-                      className={`flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 ${
-                        pathname === link.href
+                      className={`flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 ${pathname === link.href
                           ? "bg-eagle-gold/10 text-eagle-gold border border-eagle-gold/20"
                           : "text-white/70 hover:text-white hover:bg-white/5"
-                      }`}
+                        }`}
                     >
                       {link.label}
                       <ChevronRight size={16} className="opacity-40" />

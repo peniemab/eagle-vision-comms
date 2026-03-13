@@ -15,6 +15,7 @@ export const NAV_LINKS = [
   { href: "/", label: "Accueil" },
   { href: "/services", label: "Services" },
   { href: "/portfolio", label: "Portfolio" },
+  { href: "/academy", label: "Evic Academy" },
   { href: "/temoignages", label: "Témoignages" },
   { href: "/blog", label: "Blog" },
   { href: "/a-propos", label: "À Propos" },
@@ -380,3 +381,31 @@ export const HERO_SLIDES = [
     subtitle: "Stratégie digitale et social media",
   },
 ];
+
+export const ACADEMY_DATA = {
+  mission: "Préparez l'avenir de demain avec Evic Academy. Nous offrons des formations certifiantes et professionnelles pour encadrer les jeunes en utilisant des outils informatiques, techniques, de la nouvelle technologie et de la communication visuelle.",
+  vision: "Renforcer les capacités des jeunes et les préparer à des opportunités professionnelles, tout en les encourageant à s'orienter vers l'emploi ou l'entrepreneuriat comme alternative au recours aux armes.",
+  impact: "Construire un avenir meilleur pour notre pays et nos cités en particulier, en luttant contre les difficultés d'apprentissage liées au coût élevé des formations.",
+  trainings: [
+    {
+      title: "Informatique & Bureautique",
+      description: "Maîtrisez les outils essentiels pour le monde professionnel moderne.",
+      icon: "Monitor",
+    },
+    {
+      title: "Nouvelles Technologies",
+      description: "Plongez dans l'univers du code, de l'IA et des innovations tech.",
+      icon: "Cpu",
+    },
+    {
+      title: "Communication Visuelle",
+      description: "Apprenez le design, le montage vidéo et la création de contenu.",
+      icon: "Palette",
+    },
+    {
+      title: "Métiers d'Eagle Vision",
+      description: "Formez-vous directement sur nos domaines d'expertise pour devenir un pro.",
+      icon: "Briefcase",
+    },
+  ],
+};

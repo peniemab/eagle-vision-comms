@@ -21,7 +21,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Eagle Vision Comms DRC | Agence de Communication Premium",
+  title: "Eagle Vision Comms DRC | Agence de Communication à Kinshasa",
   description:
     "Bien faire et faire savoir - Démarquez-vous. Eagle Vision Comms DRC est votre agence de communication, production audiovisuelle et stratégie digitale à Kinshasa, RDC.",
   keywords: [

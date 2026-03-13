@@ -29,7 +29,7 @@ export default function PortfolioPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 pb-16 overflow-hidden">
+      <section className="relative font-black pt-32 pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-eagle-gold/5 via-transparent to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <ScrollReveal>
@@ -49,18 +49,17 @@ export default function PortfolioPage() {
       </section>
 
       {/* Filters */}
-      <section className="pb-8 sticky top-16 z-30 bg-eagle-black/80 backdrop-blur-xl border-b border-eagle-gold/5">
+      <section className="pb-8 sticky font-black top-16 z-30 bg-eagle-black/80 backdrop-blur-xl border-b border-eagle-gold/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none justify-center flex-wrap">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`relative px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 ${
-                  activeCategory === cat.id
+                className={`relative px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 ${activeCategory === cat.id
                     ? "text-eagle-black"
                     : "text-white/50 hover:text-white hover:bg-white/5"
-                }`}
+                  }`}
               >
                 {activeCategory === cat.id && (
                   <motion.div
@@ -77,7 +76,7 @@ export default function PortfolioPage() {
       </section>
 
       {/* Gallery */}
-      <section className="py-12 pb-24">
+      <section className="py-12 font-black pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div layout className="masonry-grid">
             <AnimatePresence mode="popLayout">

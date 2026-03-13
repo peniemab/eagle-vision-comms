@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Facebook, Instagram, Twitter, Youtube, Linkedin, CheckCircle } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Instagram, Facebook, Twitter, Youtube, Linkedin, Check } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import { COMPANY } from "@/lib/constants";
+import { submitContactForm } from "@/app/actions/contact";
 
 const socialLinks = [
   { icon: Facebook, label: "Facebook", href: "#" },
@@ -17,64 +18,81 @@ const socialLinks = [
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", service: "", message: "", budget: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => { setSubmitted(false); setFormData({ name: "", email: "", phone: "", service: "", message: "", budget: "" }); }, 4000);
+    setIsSubmitting(true);
+    setError(null);
+
+    const result = await submitContactForm(formData);
+
+    setIsSubmitting(false);
+    if (result.success) {
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({ name: "", email: "", phone: "", service: "", message: "", budget: "" });
+      }, 5000);
+    } else {
+      setError(result.error || "Une erreur est survenue lors de l'envoi.");
+    }
   };
 
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 pb-16 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-eagle-gold/5 via-transparent to-transparent" />
+      <section className="relative font-black pt-40 pb-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-eagle-gold/10 via-transparent to-transparent opacity-50" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
           <ScrollReveal>
-            <span className="inline-block text-eagle-gold text-xs font-semibold tracking-[0.3em] uppercase mb-4">Parlons de votre projet</span>
-            <h1 className="text-4xl md:text-6xl font-bold text-white font-[var(--font-outfit)]">Contactez-<span className="text-gradient">nous</span></h1>
-            <p className="text-white/50 mt-6 max-w-2xl mx-auto text-lg">Nous sommes prêts à donner vie à votre vision. Contactez-nous dès aujourd&apos;hui.</p>
+            <span className="inline-block text-eagle-gold text-xs font-bold tracking-[0.4em] uppercase mb-6 bg-eagle-gold/5 px-4 py-2 rounded-full border border-eagle-gold/20">Parlons de votre projet</span>
+            <h1 className="text-5xl md:text-7xl font-extrabold text-white font-[var(--font-outfit)] tracking-tight leading-tight">Parlons de votre <span className="text-gradient">Vision</span></h1>
+            <p className="text-white/60 mt-8 max-w-2xl mx-auto text-lg md:text-xl font-light leading-relaxed">Nous sommes prêts à transformer vos idées en réalité numérique. Contactez-nous dès aujourd&apos;hui pour une collaboration d&apos;exception.</p>
           </ScrollReveal>
         </div>
       </section>
 
       {/* Main Content */}
-      <section className="pb-24">
+      <section className="pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Contact Info */}
-            <div className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            {/* Contact Info (4 cols) */}
+            <div className="lg:col-span-4 space-y-8">
               <ScrollReveal>
-                <div className="glass rounded-2xl p-6 border border-eagle-gold/10">
-                  <h3 className="text-white font-bold font-[var(--font-outfit)] mb-6">📍 Informations</h3>
-                  <ul className="space-y-5">
-                    <li className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-eagle-gold/10 flex items-center justify-center flex-shrink-0"><Phone size={18} className="text-eagle-gold" /></div>
-                      <div><p className="text-white/40 text-xs">Téléphone</p><p className="text-white font-medium text-sm">{COMPANY.phone}</p></div>
+                <div className="glass rounded-[2rem] p-8 border border-eagle-gold/10 hover:border-eagle-gold/30 transition-all duration-500 shadow-2xl">
+                  <h3 className="text-white font-bold font-[var(--font-outfit)] mb-8 text-xl flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-lg bg-eagle-gold/20 flex items-center justify-center text-eagle-gold text-sm"></span> Coordonnées
+                  </h3>
+                  <ul className="space-y-8">
+                    <li className="flex items-start gap-5">
+                      <div className="w-12 h-12 rounded-2xl bg-eagle-gold/10 flex items-center justify-center flex-shrink-0 border border-eagle-gold/20 group-hover:scale-110 transition-transform"><Phone size={20} className="text-eagle-gold" /></div>
+                      <div><p className="text-white/40 text-[10px] uppercase font-bold tracking-widest mb-1">Téléphone</p><p className="text-white font-semibold text-lg hover:text-eagle-gold transition-colors">{COMPANY.phone}</p></div>
                     </li>
-                    <li className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-eagle-gold/10 flex items-center justify-center flex-shrink-0"><Mail size={18} className="text-eagle-gold" /></div>
-                      <div><p className="text-white/40 text-xs">Email</p><p className="text-white font-medium text-sm">{COMPANY.email}</p></div>
+                    <li className="flex items-start gap-5">
+                      <div className="w-12 h-12 rounded-2xl bg-eagle-gold/10 flex items-center justify-center flex-shrink-0 border border-eagle-gold/20"><Mail size={20} className="text-eagle-gold" /></div>
+                      <div><p className="text-white/40 text-[10px] uppercase font-bold tracking-widest mb-1">Email professionnel</p><p className="text-white font-semibold text-lg hover:text-eagle-gold transition-colors">{COMPANY.email}</p></div>
                     </li>
-                    <li className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-eagle-gold/10 flex items-center justify-center flex-shrink-0"><MapPin size={18} className="text-eagle-gold" /></div>
-                      <div><p className="text-white/40 text-xs">Adresse</p><p className="text-white font-medium text-sm">{COMPANY.address}</p></div>
+                    <li className="flex items-start gap-5">
+                      <div className="w-12 h-12 rounded-2xl bg-eagle-gold/10 flex items-center justify-center flex-shrink-0 border border-eagle-gold/20"><MapPin size={20} className="text-eagle-gold" /></div>
+                      <div><p className="text-white/40 text-[10px] uppercase font-bold tracking-widest mb-1">Siège Social</p><p className="text-white font-semibold text-base leading-snug">{COMPANY.address}</p></div>
                     </li>
-                    <li className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-eagle-gold/10 flex items-center justify-center flex-shrink-0"><Clock size={18} className="text-eagle-gold" /></div>
-                      <div><p className="text-white/40 text-xs">Horaires</p><p className="text-white font-medium text-sm">{COMPANY.hours}</p></div>
+                    <li className="flex items-start gap-5">
+                      <div className="w-12 h-12 rounded-2xl bg-eagle-gold/10 flex items-center justify-center flex-shrink-0 border border-eagle-gold/20"><Clock size={20} className="text-eagle-gold" /></div>
+                      <div><p className="text-white/40 text-[10px] uppercase font-bold tracking-widest mb-1">Horaires d&apos;ouverture</p><p className="text-white font-semibold text-base">{COMPANY.hours}</p></div>
                     </li>
                   </ul>
                 </div>
               </ScrollReveal>
 
               <ScrollReveal delay={0.1}>
-                <div className="glass rounded-2xl p-6 border border-eagle-gold/10">
-                  <h3 className="text-white font-bold font-[var(--font-outfit)] mb-4">💬 Réseaux Sociaux</h3>
-                  <div className="flex gap-3">
+                <div className="glass rounded-[2rem] p-8 font-black border border-eagle-gold/10 shadow-xl">
+                  <h3 className="text-white font-bold font-[var(--font-outfit)] mb-6 text-sm uppercase tracking-widest">Connectons-nous</h3>
+                  <div className="flex gap-4">
                     {socialLinks.map((s) => (
-                      <motion.a key={s.label} href={s.href} whileHover={{ scale: 1.2, y: -3 }} whileTap={{ scale: 0.9 }} className="w-10 h-10 rounded-full bg-white/5 border border-eagle-gold/10 flex items-center justify-center text-white/50 hover:text-eagle-gold hover:border-eagle-gold/30 hover:bg-eagle-gold/10 transition-all" aria-label={s.label}>
-                        <s.icon size={16} />
+                      <motion.a key={s.label} href={s.href} whileHover={{ scale: 1.1, y: -5 }} whileTap={{ scale: 0.95 }} className="w-12 h-12 rounded-2xl bg-white/5 border border-eagle-gold/10 flex items-center justify-center text-white/40 hover:text-eagle-gold hover:border-eagle-gold/40 hover:bg-eagle-gold/10 transition-all shadow-lg" aria-label={s.label}>
+                        <s.icon size={20} />
                       </motion.a>
                     ))}
                   </div>
@@ -82,88 +100,88 @@ export default function ContactPage() {
               </ScrollReveal>
 
               <ScrollReveal delay={0.2}>
-                <a href={`https://wa.me/${COMPANY.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 bg-[#25D366]/10 border border-[#25D366]/20 rounded-2xl p-6 hover:bg-[#25D366]/20 transition-all group">
-                  <div className="w-12 h-12 rounded-full bg-[#25D366] flex items-center justify-center flex-shrink-0"><MessageCircle size={22} className="text-white" /></div>
-                  <div><p className="text-white font-semibold text-sm">Contactez-nous sur WhatsApp</p><p className="text-white/40 text-xs">{COMPANY.phone} • Réponse rapide</p></div>
+                <a href={`https://wa.me/${COMPANY.whatsapp.replace(/\+/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 bg-[#25D366]/5 border border-[#25D366]/20 rounded-[2rem] p-8 hover:bg-[#25D366]/10 transition-all duration-500 group shadow-xl">
+                  <div className="w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform"><MessageCircle size={28} className="text-white" /></div>
+                  <div><p className="text-white font-bold text-base group-hover:text-[#25D366] transition-colors">WhatsApp Direct</p><p className="text-white/40 text-[13px]">Réponse immédiate garantie</p></div>
                 </a>
-              </ScrollReveal>
-
-              {/* Map placeholder */}
-              <ScrollReveal delay={0.3}>
-                <div className="glass rounded-2xl overflow-hidden border border-eagle-gold/10 h-48 relative">
-                  <div className="absolute inset-0 bg-eagle-dark flex items-center justify-center">
-                    <div className="text-center">
-                      <MapPin size={32} className="text-eagle-gold mx-auto mb-2" />
-                      <p className="text-white/50 text-sm font-medium">Kinshasa, RDC</p>
-                      <p className="text-white/30 text-xs">Boulevard du 30 Juin</p>
-                    </div>
-                  </div>
-                </div>
               </ScrollReveal>
             </div>
 
-            {/* Contact Form */}
-            <div className="lg:col-span-2">
+            {/* Contact Form (8 cols) */}
+            <div className="lg:col-span-8 ">
               <ScrollReveal direction="right">
-                <div className="glass rounded-3xl p-8 md:p-10 border border-eagle-gold/10">
+                <div className="glass rounded-[2.5rem] p-8 md:p-14 border border-eagle-gold/10 shadow-2xl relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-eagle-gold/5 blur-[100px] -mr-32 -mt-32" />
+
                   {!submitted ? (
                     <>
-                      <h3 className="text-white text-xl font-bold font-[var(--font-outfit)] mb-2">✉️ Demandez un devis gratuit</h3>
-                      <p className="text-white/40 text-sm mb-8">Remplissez le formulaire et nous vous répondrons sous 24h.</p>
-                      <form onSubmit={handleSubmit} className="space-y-5">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div>
-                            <label className="text-white/50 text-xs mb-1.5 block">Nom complet *</label>
-                            <input type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} placeholder="Votre nom" className="w-full bg-white/5 border border-eagle-gold/20 rounded-xl px-5 py-3 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-eagle-gold/50 transition-colors" required />
+                      <div className="relative mb-12">
+                        <h3 className="text-white text-3xl font-bold font-[var(--font-outfit)] mb-3">Lancez votre projet</h3>
+                        <p className="text-white/40 text-base font-light">Partagez votre besoin, nous élaborerons la stratégie parfaite.</p>
+                      </div>
+
+                      <form onSubmit={handleSubmit} className="space-y-8 relative">
+                        {error && (
+                          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-2xl text-sm font-medium">
+                            {error}
+                          </motion.div>
+                        )}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                          <div className="space-y-2">
+                            <label className="text-white/60 text-[13px] font-bold tracking-wider uppercase ml-1">Nom complet </label>
+                            <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Ex: Jean Mukendi" className="w-full bg-white/5 border border-eagle-gold/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/20 focus:outline-none focus:border-eagle-gold/40 focus:bg-eagle-gold/5 transition-all outline-none" required />
                           </div>
-                          <div>
-                            <label className="text-white/50 text-xs mb-1.5 block">Email *</label>
-                            <input type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} placeholder="votre@email.com" className="w-full bg-white/5 border border-eagle-gold/20 rounded-xl px-5 py-3 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-eagle-gold/50 transition-colors" required />
+                          <div className="space-y-2">
+                            <label className="text-white/60 text-[13px] font-bold tracking-wider uppercase ml-1">Email</label>
+                            <input type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="jean@exemple.com" className="w-full bg-white/5 border border-eagle-gold/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/20 focus:outline-none focus:border-eagle-gold/40 focus:bg-eagle-gold/5 transition-all outline-none" required />
                           </div>
                         </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div>
-                            <label className="text-white/50 text-xs mb-1.5 block">Téléphone</label>
-                            <input type="tel" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} placeholder="+243..." className="w-full bg-white/5 border border-eagle-gold/20 rounded-xl px-5 py-3 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-eagle-gold/50 transition-colors" />
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                          <div className="space-y-2">
+                            <label className="text-white/60 text-[13px] font-bold tracking-wider uppercase ml-1">Téléphone</label>
+                            <input type="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder="+243..." className="w-full bg-white/5 border border-eagle-gold/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/20 focus:outline-none focus:border-eagle-gold/40 focus:bg-eagle-gold/5 transition-all outline-none" />
                           </div>
-                          <div>
-                            <label className="text-white/50 text-xs mb-1.5 block">Service souhaité</label>
-                            <select value={formData.service} onChange={(e) => setFormData({...formData, service: e.target.value})} className="w-full bg-white/5 border border-eagle-gold/20 rounded-xl px-5 py-3 text-sm text-white/50 focus:outline-none focus:border-eagle-gold/50 transition-colors">
-                              <option value="">Sélectionnez un service</option>
-                              <option value="photo">Photographie</option>
-                              <option value="video">Vidéographie</option>
-                              <option value="pub">Publicité & TV</option>
-                              <option value="comm">Communication</option>
-                              <option value="digital">Social Media & Digital</option>
-                              <option value="branding">Branding</option>
-                              <option value="event">Événementiel</option>
+                          <div className="space-y-2">
+                            <label className="text-white/60 text-[13px] font-bold tracking-wider uppercase ml-1">Service souhaité</label>
+                            <select value={formData.service} onChange={(e) => setFormData({ ...formData, service: e.target.value })} className="w-full bg-white/5 border border-eagle-gold/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-eagle-gold/40 focus:bg-eagle-gold/5 transition-all outline-none appearance-none">
+                              <option value="" className="bg-eagle-black text-white/50">Sélectionnez un service</option>
+                              <option value="Photographie" className="bg-eagle-black text-white">Photographie</option>
+                              <option value="Vidéographie" className="bg-eagle-black text-white">Vidéographie</option>
+                              <option value="Publicité" className="bg-eagle-black text-white">Publicité & TV</option>
+                              <option value="Stratégies" className="bg-eagle-black text-white">Stratégies de Communication</option>
+                              <option value="Digital" className="bg-eagle-black text-white">Digital & Social Media</option>
+                              <option value="Branding" className="bg-eagle-black text-white">Branding & Production</option>
+                              <option value="Événementiel" className="bg-eagle-black text-white">Événementiel</option>
                             </select>
                           </div>
                         </div>
-                        <div>
-                          <label className="text-white/50 text-xs mb-1.5 block">Budget estimé</label>
-                          <select value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})} className="w-full bg-white/5 border border-eagle-gold/20 rounded-xl px-5 py-3 text-sm text-white/50 focus:outline-none focus:border-eagle-gold/50 transition-colors">
-                            <option value="">Sélectionnez votre budget</option>
-                            <option value="small">Moins de 500$</option>
-                            <option value="medium">500$ - 2,000$</option>
-                            <option value="large">2,000$ - 5,000$</option>
-                            <option value="enterprise">Plus de 5,000$</option>
+                        <div className="space-y-2">
+                          <label className="text-white/60 text-[13px] font-bold tracking-wider uppercase ml-1">Budget estimé</label>
+                          <select value={formData.budget} onChange={(e) => setFormData({ ...formData, budget: e.target.value })} className="w-full bg-white/5 border border-eagle-gold/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-eagle-gold/40 focus:bg-eagle-gold/5 transition-all outline-none appearance-none">
+                            <option value="">Indiquez une fourchette</option>
+                            <option value="Small (< $500)">Moins de 500$</option>
+                            <option value="Medium ($500-$2k)">500$ - 2,000$</option>
+                            <option value="Large ($2k-$5k)">2,000$ - 5,000$</option>
+                            <option value="Premium (> $5k)">Plus de 5,000$</option>
                           </select>
                         </div>
-                        <div>
-                          <label className="text-white/50 text-xs mb-1.5 block">Votre message *</label>
-                          <textarea value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} placeholder="Décrivez votre projet..." rows={5} className="w-full bg-white/5 border border-eagle-gold/20 rounded-xl px-5 py-3 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-eagle-gold/50 transition-colors resize-none" required />
+                        <div className="space-y-2">
+                          <label className="text-white/60 text-[13px] font-bold tracking-wider uppercase ml-1">Votre message</label>
+                          <textarea value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} placeholder="Parlez-nous de vos objectifs..." rows={5} className="w-full bg-white/5 border border-eagle-gold/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/20 focus:outline-none focus:border-eagle-gold/40 focus:bg-eagle-gold/5 transition-all outline-none resize-none" required />
                         </div>
-                        <button type="submit" className="w-full bg-gradient-to-r from-eagle-gold to-eagle-yellow text-eagle-black font-semibold py-4 rounded-xl text-sm hover:shadow-lg hover:shadow-eagle-gold/30 transition-all duration-300 flex items-center justify-center gap-2">
-                          <Send size={16} /> Envoyer ma demande
+                        <button type="submit" disabled={isSubmitting} className="w-full h-16 bg-gradient-to-r from-eagle-gold to-eagle-yellow text-eagle-black font-extrabold rounded-2xl text-lg hover:shadow-[0_0_30px_rgba(212,175,55,0.3)] transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed group">
+                          {isSubmitting ? <span className="w-6 h-6 border-3 border-eagle-black border-t-transparent rounded-full animate-spin" /> : <><Send size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /> Envoyer ma demande</>}
                         </button>
                       </form>
                     </>
                   ) : (
-                    <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center py-16">
-                      <div className="w-20 h-20 rounded-full bg-eagle-gold/20 flex items-center justify-center mx-auto mb-6"><CheckCircle size={40} className="text-eagle-gold" /></div>
-                      <h3 className="text-white text-2xl font-bold font-[var(--font-outfit)] mb-3">Message envoyé !</h3>
-                      <p className="text-white/50">Merci pour votre demande. Notre équipe vous répondra sous 24 heures.</p>
+                    <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center py-24">
+                      <div className="w-24 h-24 rounded-full bg-eagle-gold/20 flex items-center justify-center mx-auto mb-8 border border-eagle-gold/30 shadow-[0_0_50px_rgba(212,175,55,0.1)] relative">
+                        <Check size={48} className="text-eagle-gold relative z-10" />
+                        <motion.div initial={{ scale: 1 }} animate={{ scale: 1.5, opacity: 0 }} transition={{ duration: 1, repeat: Infinity }} className="absolute inset-0 bg-eagle-gold/20 rounded-full" />
+                      </div>
+                      <h3 className="text-white text-4xl font-extrabold font-[var(--font-outfit)] mb-4">Message envoyé !</h3>
+                      <p className="text-white/50 text-xl font-light">Nous avons bien reçu votre demande. <br />Notre équipe d&apos;experts vous répondra sous 2h.</p>
                     </motion.div>
                   )}
                 </div>

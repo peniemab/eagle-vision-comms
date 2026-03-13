@@ -107,7 +107,7 @@ export default function HomePage() {
             transition={{ delay: 0.3 }}
             className="inline-flex items-center gap-2 bg-eagle-gold/10 border border-eagle-gold/20 rounded-full px-5 py-2 mb-6"
           >
-            <span className="text-eagle-gold text-sm font-medium">🦅 Agence de Communication Premium</span>
+            <span className="text-eagle-gold text-sm font-medium">Agence de Communication à Kinshasa</span>
           </motion.div>
 
           <motion.h1
@@ -157,11 +157,10 @@ export default function HomePage() {
               <button
                 key={i}
                 onClick={() => setCurrentSlide(i)}
-                className={`h-1.5 rounded-full transition-all duration-500 ${
-                  i === currentSlide
+                className={`h-1.5 rounded-full transition-all duration-500 ${i === currentSlide
                     ? "bg-eagle-gold w-8"
                     : "bg-white/20 w-4 hover:bg-white/40"
-                }`}
+                  }`}
               />
             ))}
           </div>
@@ -419,7 +418,7 @@ export default function HomePage() {
                   type="submit"
                   className="bg-gradient-to-r from-eagle-gold to-eagle-yellow text-eagle-black font-semibold px-8 py-3 rounded-full text-sm hover:shadow-lg hover:shadow-eagle-gold/30 transition-all duration-300 hover:scale-105 whitespace-nowrap"
                 >
-                  {newsletterSent ? "✅ Inscrit !" : "S'inscrire"}
+                  {newsletterSent ? "Inscrit !" : "S'inscrire"}
                 </button>
               </form>
             </div>
