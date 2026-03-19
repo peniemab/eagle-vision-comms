@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Gift } from "lucide-react";
+import { X, Send, Gift, Loader2 } from "lucide-react";
+import { subscribeToNewsletter } from "../app/actions/newsletter";
 
 export default function NewsletterPopup() {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     const dismissed = sessionStorage.getItem("newsletter-dismissed");
@@ -25,14 +28,24 @@ export default function NewsletterPopup() {
     sessionStorage.setItem("newsletter-dismissed", "true");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
+    if (!email) return;
+
+    setIsSubmitting(true);
+    setErrorMsg("");
+
+    const result = await subscribeToNewsletter(email, "popup");
+    
+    if (result.success) {
       setSubscribed(true);
       setTimeout(() => {
         handleDismiss();
       }, 2500);
+    } else {
+      setErrorMsg(result.message);
     }
+    setIsSubmitting(false);
   };
 
   return (
@@ -78,12 +91,15 @@ export default function NewsletterPopup() {
                     placeholder="votre@email.com"
                     className="w-full bg-white/5 border border-eagle-gold/20 rounded-xl px-5 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-eagle-gold/50 transition-colors"
                     required
+                    disabled={isSubmitting}
                   />
+                  {errorMsg && <p className="text-red-400 text-xs text-center">{errorMsg}</p>}
                   <button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-eagle-gold to-eagle-yellow text-eagle-black font-semibold py-3 rounded-xl text-sm hover:shadow-lg hover:shadow-eagle-gold/30 transition-all duration-300 flex items-center justify-center gap-2"
+                    disabled={isSubmitting}
+                    className="w-full bg-gradient-to-r from-eagle-gold to-eagle-yellow text-eagle-black font-semibold py-3 rounded-xl text-sm hover:shadow-lg hover:shadow-eagle-gold/30 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50"
                   >
-                    <Send size={14} />
+                    {isSubmitting ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
                     Je m&apos;inscris gratuitement
                   </button>
                 </form>

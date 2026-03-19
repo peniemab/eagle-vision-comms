@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Monitor, Cpu, Palette, Briefcase, GraduationCap, Target, ShieldCheck, TrendingUp, Users, ArrowRight, Heart } from "lucide-react";
-import ScrollReveal from "@/components/ScrollReveal";
-import { ACADEMY_DATA } from "@/lib/constants";
+import ScrollReveal from "../../components/ScrollReveal";
+import { ACADEMY_DATA } from "../../lib/constants";
 
 const iconMap = {
   Monitor: Monitor,

@@ -4,9 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Eye, Lightbulb, Heart, Award, ChevronDown, Linkedin, Twitter, Mail } from "lucide-react";
-import ScrollReveal from "@/components/ScrollReveal";
-import AnimatedCounter from "@/components/AnimatedCounter";
-import { TEAM_MEMBERS, TIMELINE, FAQ_ITEMS, STATS } from "@/lib/constants";
+import ScrollReveal from "../../components/ScrollReveal";
+import AnimatedCounter from "../../components/AnimatedCounter";
+import { TEAM_MEMBERS, TIMELINE, FAQ_ITEMS, STATS } from "../../lib/constants";
 
 const values = [
   { icon: Eye, title: "Vision", desc: "Voir au-delà de l'ordinaire pour créer l'extraordinaire." },

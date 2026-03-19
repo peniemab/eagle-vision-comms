@@ -4,8 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ZoomIn } from "lucide-react";
-import ScrollReveal from "@/components/ScrollReveal";
-import { PORTFOLIO_ITEMS } from "@/lib/constants";
+import ScrollReveal from "../../components/ScrollReveal";
+import { PORTFOLIO_ITEMS } from "../../lib/constants";
 
 const CATEGORIES = [
   { id: "all", label: "Tous" },

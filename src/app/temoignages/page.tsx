@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, MessageSquare, Send, CheckCircle, User, Quote, ArrowRight } from "lucide-react";
-import ScrollReveal from "@/components/ScrollReveal";
-import AnimatedCounter from "@/components/AnimatedCounter";
-import { submitTestimonial, getApprovedTestimonials } from "@/app/actions/testimonials";
+import ScrollReveal from "../../components/ScrollReveal";
+import AnimatedCounter from "../../components/AnimatedCounter";
+import { submitTestimonial, getApprovedTestimonials } from "../actions/testimonials";
 
 const initialTestimonials = [
   {

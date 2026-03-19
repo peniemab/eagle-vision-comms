@@ -23,8 +23,7 @@ export async function submitTestimonial(formData: {
           service: formData.service,
           is_approved: false, // Default to false for moderation
         },
-      ])
-      .select();
+      ]);
 
     if (error) {
       console.error("Supabase error:", error);

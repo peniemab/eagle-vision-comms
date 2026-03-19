@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Instagram, Facebook, Twitter, Youtube, Linkedin, Check } from "lucide-react";
-import ScrollReveal from "@/components/ScrollReveal";
-import { COMPANY } from "@/lib/constants";
-import { submitContactForm } from "@/app/actions/contact";
+import ScrollReveal from "../../components/ScrollReveal";
+import { COMPANY } from "../../lib/constants";
+import { submitContactForm } from "../actions/contact";
 
 const socialLinks = [
   { icon: Facebook, label: "Facebook", href: "#" },

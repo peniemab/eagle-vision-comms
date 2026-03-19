@@ -14,12 +14,15 @@ import {
   ArrowRight,
   Check,
   ChevronRight,
+  Plane,
+  Radio,
+  Scissors
 } from "lucide-react";
-import ScrollReveal from "@/components/ScrollReveal";
-import { SERVICES } from "@/lib/constants";
+import ScrollReveal from "../../components/ScrollReveal";
+import { SERVICES } from "../../lib/constants";
 
 const iconMap: Record<string, React.ElementType> = {
-  Camera, Video, Tv, Target, Globe, Palette, PartyPopper,
+  Camera, Video, Tv, Target, Globe, Palette, PartyPopper, Plane, Radio, Scissors
 };
 
 export default function ServicesPage() {

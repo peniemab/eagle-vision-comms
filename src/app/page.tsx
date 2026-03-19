@@ -19,10 +19,14 @@ import {
   PartyPopper,
   Send,
   Quote,
+  Plane,
+  Radio,
+  Scissors
 } from "lucide-react";
-import ScrollReveal from "@/components/ScrollReveal";
-import AnimatedCounter from "@/components/AnimatedCounter";
-import VisitorCounter from "@/components/VisitorCounter";
+import ScrollReveal from "../components/ScrollReveal";
+import AnimatedCounter from "../components/AnimatedCounter";
+import VisitorCounter from "../components/VisitorCounter";
+import { getApprovedTestimonials } from "./actions/testimonials";
 import {
   COMPANY,
   SERVICES,
@@ -31,16 +35,17 @@ import {
   STATS,
   PARTNERS,
   HERO_SLIDES,
-} from "@/lib/constants";
+} from "../lib/constants";
 
 const iconMap: Record<string, React.ElementType> = {
-  Camera, Video, Tv, Target, Globe, Palette, PartyPopper,
+  Camera, Video, Tv, Target, Globe, Palette, PartyPopper, Plane, Radio, Scissors
 };
 
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterSent, setNewsletterSent] = useState(false);
+  const [allTestimonials, setAllTestimonials] = useState(TESTIMONIALS);
 
   // Auto advance hero slides
   useEffect(() => {
@@ -48,6 +53,28 @@ export default function HomePage() {
       setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
     }, 5000);
     return () => clearInterval(timer);
+  }, []);
+
+  // Fetch live testimonials
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      const liveData = await getApprovedTestimonials();
+      if (liveData && liveData.length > 0) {
+        // Merge with initial static testimonials, placing newer ones first
+        const formattedLive = liveData.map((t: any) => ({
+          id: t.id,
+          name: t.name,
+          role: t.role || "Client",
+          company: t.company || "",
+          avatar: t.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=D4AF37&color=0F0F0F`,
+          text: t.message,
+          rating: t.rating || 5,
+          service: t.service || "General"
+        }));
+        setAllTestimonials([...formattedLive, ...TESTIMONIALS]);
+      }
+    };
+    fetchTestimonials();
   }, []);
 
   const handleNewsletter = (e: React.FormEvent) => {
@@ -330,7 +357,7 @@ export default function HomePage() {
           </ScrollReveal>
 
           <Slider {...testimonialSettings}>
-            {TESTIMONIALS.map((testimonial) => (
+            {allTestimonials.map((testimonial) => (
               <div key={testimonial.id} className="px-3">
                 <div className="glass rounded-2xl p-6 h-full">
                   <Quote size={24} className="text-eagle-gold/30 mb-4" />

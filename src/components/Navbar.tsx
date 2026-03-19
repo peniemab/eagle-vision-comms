@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -36,9 +37,14 @@ export default function Navbar() {
         <nav className="max-w-7xl font-black mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-10 h-10 flex items-center justify-center">
-              <div className="absolute inset-0 bg-gradient-to-br from-eagle-gold to-eagle-yellow rounded-lg transform rotate-45 group-hover:rotate-[135deg] transition-transform duration-500" />
-              <span className="relative text-eagle-black font-bold text-xl font-[var(--font-outfit)]">E</span>
+            <div className="relative w-10 h-10 flex items-center justify-center overflow-hidden rounded-lg">
+              <Image 
+                src="/images/logo.png" 
+                alt="Eagle Vision Logo" 
+                width={40} 
+                height={40} 
+                className="object-contain group-hover:scale-110 transition-transform duration-500"
+              />
             </div>
             <div className="hidden sm:block">
               <span className="text-white font-bold text-lg font-[var(--font-outfit)] tracking-wider">

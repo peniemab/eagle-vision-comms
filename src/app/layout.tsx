@@ -3,10 +3,10 @@ import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
-import NewsletterPopup from "@/components/NewsletterPopup";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import WhatsAppButton from "../components/WhatsAppButton";
+import NewsletterPopup from "../components/NewsletterPopup";
 
 const outfit = Outfit({
   variable: "--font-outfit",

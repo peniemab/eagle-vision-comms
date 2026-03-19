@@ -22,8 +22,7 @@ export async function submitContactForm(formData: {
           budget: formData.budget,
           message: formData.message,
         },
-      ])
-      .select();
+      ]);
 
     if (error) {
       console.error("Supabase error:", error);
